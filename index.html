@@ -4,15 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/app.css">
-    <title>Typescript and maps</title>
+    <title>Cup Personalizer</title>
+    <link href="/css/dist.css" rel="stylesheet">
 </head>
 <body>
-    <main id="scene-container">
-        <button id="btn-iniciar">Iniciar</button>
+    <main>
+        <div>
+            <section class="flex  h-screen">
+                <article class="p-4 bg-gray-500 w-full h-full">
+                    <h2 class="text-white">Preview de taza personalizada</h2>
+                </article>
+                <aside class="absolute h-full right-0 bg-gray-900" >
+                    <div class="flex flex-col text-white ">
+                        <div class="toolbar-item p-2">
+                            Modelo
+                        </div>
+                        <div class="toolbar-item p-2">
+                            Color
+                        </div>
+                        <div class="toolbar-item p-2">
+                            Diseño
+                        </div>
+                    </div>
+                </aside>
+            </section>
+            <div class="absolute bottom-0 mb-2 ml-4">
+                <div class="resumen-bar flex flex-col md:flex-row gap-2">
+                    <div class="flex bg-gray-700 rounded-md">
+                        <strong class="p-2">
+                            Qty:
+                        </strong>
+                        <input type="number" value="1" class="px-2 rounded-r-md">
+                    </div>
+                    <div class="flex bg-gray-700 rounded-md">
+                        <strong class="p-2">
+                            Price U:
+                        </strong>
+                        <input readonly disabled type="text" value="5" class="px-2 rounded-r-md">
+                    </div>
+                    <div class="flex bg-gray-700 rounded-md ">
+                        <strong class="p-2">
+                            Total:
+                        </strong>
+                        <input readonly disabled type="text" value="5" class="px-2 rounded-r-md">
+                    </div>
+                </div>
+                <div class="mt-1 flex justify-center">
+                    <button class="p-2 bg-gray-900 rounded-lg text-white font-semibold">Confirmar Pedido</button>
+                </div>
+            </div>
+        </div>
     </main>
-        
-    </canvas>
-    <script src="dist/main.js"></script>
 </body>
 </html>
