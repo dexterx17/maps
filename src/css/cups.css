@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#modal {
+    left: 5%;
+    top: 5%;
+    @apply absolute bg-slate-400 w-10/12 h-5/6 z-10 rounded shadow-2xl;
+}

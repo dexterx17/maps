@@ -1,4 +1,5 @@
 import { World } from './world';
+import { ToolbarOptions } from './ui/toolbarOption';
 
 function main() {
   console.log('main');
@@ -21,7 +22,10 @@ function main() {
         //world.render();
 
         // start the loop (produce a stream of frames)
-        world.start();
+    world.start();
+    
+
+    new ToolbarOptions();
 
         //btnIniciar.style.display = 'none';
 //    })
