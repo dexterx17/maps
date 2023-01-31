@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Mesh, MeshStandardMaterial } from 'three';
+import { BoxGeometry, Color, Mesh, MeshStandardMaterial, MathUtils } from 'three';
 
 function createCube() {
     // create a geometry
@@ -10,22 +10,16 @@ function createCube() {
 
     // create a Mesh containing the geometry and material
     const cube = new Mesh(geometry, material);
-    
-    let x = 0, y = 0, z = 0;
-    
-    //cube.rotation.set(6, 6, 6);
 
-    setInterval(function(){
-        //if (x < 10) {
-        x +=1;
-        y +=1;
-        z +=1;
-            cube.rotation.set(x, y, z);
-        // } else {
-        //     cube.rotation.set(x -= 1, y -= 1, z);
-        // }
-        console.log(x, y, z);
-    }, 500);
+    const radiansPerSecond = MathUtils.degToRad(30);
+    
+    // this method will be called once per frame
+    cube.tick = (delta) => {
+            // increase the cube's rotation each frame
+            cube.rotation.z += radiansPerSecond * delta;
+            cube.rotation.x += radiansPerSecond * delta;
+            cube.rotation.y += radiansPerSecond * delta;
+    };
 
     return cube;
 }

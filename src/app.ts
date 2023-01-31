@@ -6,7 +6,7 @@ function main() {
     const container = document.querySelector('#scene-container') as HTMLElement;
   
     // Get a reference to the init btn
-    const btnIniciar = document.getElementById('btn-iniciar')! as HTMLElement;
+    //const btnIniciar = document.getElementById('btn-iniciar')! as HTMLElement;
 
 //    btnIniciar.addEventListener('click', () => {
         // 1. Create an instance of the World app
@@ -16,11 +16,14 @@ function main() {
         // console.log(world.camera);
         // console.log(world.renderer);
         // console.log(world.scene);
-    
-        // 2. Render the scene
-        world.render();
 
-        btnIniciar.style.display = 'none';
+        // produce a single frame (render on demand)
+        //world.render();
+
+        // start the loop (produce a stream of frames)
+        world.start();
+
+        //btnIniciar.style.display = 'none';
 //    })
 }
 
