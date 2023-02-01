@@ -2,7 +2,6 @@ import Cmp from './base-component';
 import * as Validation from '../util/validation';
 import { autobind as Autobind } from '../decorators/autobind';
 import { projectState } from '../state/project-state';
-import { Project } from '../models/project';
 
 // ProjectInput Class
 export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {

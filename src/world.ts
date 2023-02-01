@@ -8,6 +8,7 @@ import { createRenderer } from './systems/renderer';
 import { Resizer } from './systems/resizer';
 import { Loop } from './systems/loop';
 
+import { projectState } from './state/project-state';
 
 class World{
     

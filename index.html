@@ -9,36 +9,77 @@
     </head>
     <body>
         <template id="project-input">
-            <form class="flex flex-col gap-1 items-center max-w-xl mx-auto border border-dotted rounded border-gray-800 my-4 p-2">
+            <form
+                class="flex flex-col gap-1 items-center max-w-xl mx-auto border border-dotted rounded border-gray-800 my-4 p-2"
+            >
                 <header class="p-4">
                     <h3 class="text-xl font-bold">Configura tu proyecto</h3>
                 </header>
-                <div class="flex flex-col w-full bg-gray-900 border border-dotted rounded p-2">
-                    <label class="text-white py-1" for="name">Nombre de Proyecto</label>
-                    <input type="text" name="name" value="My first cup" required class="rounded p-2">
+                <div
+                    class="flex flex-col w-full bg-gray-900 border border-dotted rounded p-2"
+                >
+                    <label class="text-white py-1" for="name"
+                        >Nombre de Proyecto</label
+                    >
+                    <input
+                        type="text"
+                        name="name"
+                        value="My first cup"
+                        required
+                        class="rounded p-2"
+                    />
                 </div>
-                <div class="flex flex-col w-full bg-gray-900 border border-dotted rounded p-2">
-                    <label class="text-white py-1" for="description">Descripción Proyecto</label>
+                <div
+                    class="flex flex-col w-full bg-gray-900 border border-dotted rounded p-2"
+                >
+                    <label class="text-white py-1" for="description"
+                        >Descripción Proyecto</label
+                    >
                     <textarea name="description" class="rounded p-2"></textarea>
                 </div>
                 <div class="mt-4">
-                    <button class="bg-gray-900 font-bold text-white border border-dotted hover:border-solid rounded p-2">
+                    <button
+                        class="bg-gray-900 font-bold text-white border border-dotted hover:border-solid rounded p-2"
+                    >
                         Guardar Cambios
                     </button>
-                    <button id="cancelar-input" class="bg-gray-400  text-white border border-gray-900 border-dotted hover:border-solid rounded p-2">
+                    <button
+                        id="cancelar-input"
+                        class="bg-white text-gray-600 border border-gray-900 border-dotted hover:border-solid rounded p-2"
+                    >
                         Cancelar
                     </button>
                 </div>
             </form>
         </template>
         <template id="single-modelo">
-            <article class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
+            <article
+                class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300"
+            >
                 <div>
-                    <div class="relative flex items-end overflow-hidden rounded-xl">
-                        <img src="/assets/images/taza1.jpg" alt="Taza estándar" />
-                        <div class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    <div
+                        class="relative flex items-end overflow-hidden rounded-xl"
+                    >
+                        <img
+                            src="/assets/images/taza1.jpg"
+                            alt="Taza estándar"
+                        />
+                        <div
+                            class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="h-4 w-4"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                                />
                             </svg>
 
                             <button class="text-sm">Seleccionar</button>
@@ -47,20 +88,42 @@
 
                     <div class="mt-1 p-2">
                         <h2 class="text-slate-700">Taza estándar</h2>
-                        <p class="mt-1 text-sm text-slate-400 materials">Porcelanato</p>
+                        <p class="mt-1 text-sm text-slate-400 materials">
+                            Porcelanato
+                        </p>
 
                         <div class="mt-3 flex items-end justify-between">
                             <p>
-                                <span class="text-lg font-bold text-blue-500 price">$4.99</span>
-                                <span class="text-sm text-slate-400">/taza</span>
+                                <span
+                                    class="text-lg font-bold text-blue-500 price"
+                                    >$4.99</span
+                                >
+                                <span class="text-sm text-slate-400"
+                                    >/taza</span
+                                >
                             </p>
 
-                            <div class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            <div
+                                class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="h-4 w-4"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                                    />
                                 </svg>
 
-                                <button class="btn-seleccionar text-sm">Seleccionar</button>
+                                <button class="btn-seleccionar text-sm">
+                                    Seleccionar
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -70,28 +133,152 @@
         <template id="project-model">
             <div>
                 <header class="flex flex-col items-center justify-center">
-                    <h2 class="font-extrabold text-2xl">Seleccione un modelo para su taza</h2>
-                    <h5 class="text-white">Los colores disponibles van de acuerdo al modelo de taza que selecciones</h5>
+                    <h2 class="font-extrabold text-2xl">
+                        Selecciona un modelo para tu taza
+                    </h2>
+                    <h5 class="text-white">
+                        Los colores disponibles van de acuerdo al modelo de taza
+                        que selecciones
+                    </h5>
                 </header>
                 <section class="py-10 bg-gray-100">
-                    <div id="models-container" class="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    </div>
+                    <div
+                        id="models-container"
+                        class="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    ></div>
                 </section>
             </div>
         </template>
         <template id="single-color">
-            <div class="rounded p-1 border border-gray-900 border-dotted hover:border-solid">
+            <div
+                class="rounded p-1 border border-gray-900 border-dotted hover:border-solid"
+            >
                 <div class="color w-16 h-16 rounded cursor-pointer"></div>
             </div>
         </template>
         <template id="project-color">
             <div>
                 <header class="flex flex-col items-center justify-center">
-                    <h2 class="font-extrabold text-2xl">Seleccione un color para su taza</h2>
-                    <h5 class="text-white">Los colores disponibles van de acuerdo al modelo de taza que selecciones</h5>
+                    <h2 class="font-extrabold text-2xl">
+                        Selecciona un color para tu taza
+                    </h2>
+                    <h5 class="text-white">
+                        Los colores disponibles van de acuerdo al modelo de taza
+                        que selecciones
+                    </h5>
                 </header>
                 <section class="p-10 bg-gray-100">
-                    <div id="colors-container" class="mx-auto flex gap-1">
+                    <div id="colors-container" class="mx-auto flex gap-1"></div>
+                </section>
+            </div>
+        </template>
+        <template id="project-design">
+            <div>
+                <header class="flex flex-col items-center justify-center p-2">
+                    <h2 class="font-extrabold text-2xl">
+                        Configura el diseño para tu taza
+                    </h2>
+                    <h5 class="text-white">
+                        Puedes agregar texto, iconos o imágenes para
+                        personalizar tu taza
+                    </h5>
+                </header>
+                <section class="bg-gray-100">
+                    <header class="flex justify-center gap-2 bg-gray-800">
+                        <div
+                            id="btn-design-text"
+                            class="text-white border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
+                        >
+                            <div>Imagen</div>
+                            <div class="py-1">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-6 h-6 hover:scale-125"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div
+                            id="btn-design-text"
+                            class="text-white border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
+                        >
+                            <div>Texto</div>
+                            <div class="py-1">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-6 h-6"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div
+                            id="btn-design-text"
+                            class="text-white border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
+                        >
+                            <div>Icono</div>
+                            <div class="py-1">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-6 h-6"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.866.966 1.866 2.013 0 3.728-2.35 6.75-5.25 6.75S6.75 18.728 6.75 15c0-1.046.83-1.867 1.866-2.013A24.204 24.204 0 0112 12.75zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 01-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44.125 2.104.52 4.136 1.153 6.06M12 12.75a2.25 2.25 0 002.248-2.354M12 12.75a2.25 2.25 0 01-2.248-2.354M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 00-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.734 3.734 0 01.4-2.253M12 8.25a2.25 2.25 0 00-2.248 2.146M12 8.25a2.25 2.25 0 012.248 2.146M8.683 5a6.032 6.032 0 01-1.155-1.002c.07-.63.27-1.222.574-1.747m.581 2.749A3.75 3.75 0 0115.318 5m0 0c.427-.283.815-.62 1.155-.999a4.471 4.471 0 00-.575-1.752M4.921 6a24.048 24.048 0 00-.392 3.314c1.668.546 3.416.914 5.223 1.082M19.08 6c.205 1.08.337 2.187.392 3.314a23.882 23.882 0 01-5.223 1.082"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="mx-auto flex gap-1">
+                        <article class="h-full w-full">
+                            <header class="p-4">
+                                <h2>Area de impresión de tu taza</h2>
+                            </header>
+                            <div
+                                class="h-full bg-gray-200 px-8"
+                                id="design-container"
+                            >
+                                <canvas class="h-48 w-full"> </canvas>
+                                <span> Area de impresion </span>
+                            </div>
+                            <footer class="flex gap-2 justify-center py-4">
+                                <button
+                                    id="finalizar-design"
+                                    class="p-2 text-white rounded bg-gray-800"
+                                >
+                                    Finalizar Diseño
+                                </button>
+                                <button
+                                    id="cancelar-design"
+                                    class="bg-white text-gray-600 border border-gray-900 border-dotted hover:border-solid rounded p-2"
+                                >
+                                    Cancelar
+                                </button>
+                            </footer>
+                        </article>
                     </div>
                 </section>
             </div>
@@ -180,6 +367,7 @@
                                 </div>
                             </div>
                             <div
+                                id="btn-desing"
                                 class="border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
                             >
                                 <div>Diseño</div>
@@ -200,7 +388,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div
+                            <!-- <div
                                 class="border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
                             >
                                 <div>Custom</div>
@@ -220,12 +408,15 @@
                                         />
                                     </svg>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </aside>
                 </section>
                 <div class="absolute bottom-0 mb-2 ml-4">
-                    <form id="resumen-form" class="resumen-bar flex flex-wrap gap-2">
+                    <form
+                        id="resumen-form"
+                        class="resumen-bar flex flex-wrap gap-2"
+                    >
                         <div class="flex bg-gray-700 rounded-md">
                             <strong class="p-2"> Qty: </strong>
                             <input
@@ -237,13 +428,19 @@
                         </div>
                         <div class="flex bg-gray-700 rounded-md">
                             <strong class="p-2"> Price U: </strong>
-                            <div id="unit-price" class="p-2 bg-white rounded-r-md">
+                            <div
+                                id="unit-price"
+                                class="p-2 bg-white rounded-r-md"
+                            >
                                 $ 4.99
                             </div>
                         </div>
                         <div class="flex items-stretch bg-gray-700 rounded-md">
                             <strong class="p-2"> Total: </strong>
-                            <div id="total-price" class="p-2 bg-white rounded-r-md">
+                            <div
+                                id="total-price"
+                                class="p-2 bg-white rounded-r-md"
+                            >
                                 $ 4.99
                             </div>
                         </div>
@@ -251,12 +448,21 @@
                             <button
                                 class="flex items-center gap-1 p-2 bg-gray-900 rounded-lg text-white font-semibold"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="h-6 w-6"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                                    />
                                 </svg>
-                                <span>
-                                    Confirmar Pedido
-                                </span>
+                                <span> Confirmar Pedido </span>
                             </button>
                         </div>
                     </form>

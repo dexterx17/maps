@@ -8,12 +8,7 @@ import modelsArray from '../data/models';
 
 // ProjectModel Class
 export class ProjectModel extends Cmp<HTMLDivElement, HTMLFormElement> {
-    titleInputElement: HTMLInputElement;
-    descriptionInputElement: HTMLInputElement;
-    btnSeleccionarModelo: HTMLElement;
     availableModels: Modelo[] = [];
-
-    //peopleInputElement: HTMLInputElement;
 
     constructor() {
         super('project-model', 'modal', true, 'user-model');
