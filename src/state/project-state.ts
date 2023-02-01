@@ -48,6 +48,11 @@ export class ProjectState extends State<Project> {
 		this.activeProject.color = color;
 		this.updateListeners();
 	}
+	
+	updateQuantity(qty: number){
+		this.activeProject.quantity = qty;
+		this.updateListeners();
+	}
 
     //   addProject(title: string, description: string, numOfPeople: number) {
     //     const newProject = new Project(

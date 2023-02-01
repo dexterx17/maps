@@ -34,7 +34,7 @@ export class ProjectModel extends Cmp<HTMLDivElement, HTMLFormElement> {
         let parent = this;
         modelsArray.forEach(m => {
 
-            let mod = new Modelo(m.id,m.name,m.materials, m.description, m.precio, m.img, '');
+            let mod = new Modelo(m.id,m.name,m.materials, m.description, m.precio, m.img, m.img, m.colors);
             
             parent.availableModels.push(mod);
         });

@@ -1,6 +1,7 @@
 import { Modelo } from '../models/project';
 import Component from './base-component';
 import { projectState } from '../state/project-state';
+import { autobind } from '../decorators/autobind';
 
 // ModeloItem Class
 export class ModeloItem extends Component<HTMLUListElement, HTMLLIElement>{
@@ -19,6 +20,7 @@ export class ModeloItem extends Component<HTMLUListElement, HTMLLIElement>{
 
     constructor(hostId: string, modelo: Modelo) {
         super('single-modelo', hostId, false, modelo.id.toString());
+        console.log('modelo',modelo);
         this.modelo = modelo;
         this.btnsSeleccionarModelo = this.element.querySelectorAll(
             'button'
@@ -43,7 +45,9 @@ export class ModeloItem extends Component<HTMLUListElement, HTMLLIElement>{
 
     }
 
+    @autobind
     private pickModel(){
+        console.log('pickModel',this.modelo);
         projectState.updateModel(this.modelo);
     }
 }

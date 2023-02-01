@@ -64,7 +64,6 @@ export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
     private clearInputs() {
         this.titleInputElement.value = '';
         this.descriptionInputElement.value = '';
-        //this.peopleInputElement.value = '';
     }
 
     @Autobind
@@ -80,7 +79,6 @@ export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
     
     @Autobind
     private cancelHandler() {
-
         this.hostElement.innerHTML = '';
         this.hostElement.style.display = 'none';
     }

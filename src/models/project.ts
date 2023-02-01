@@ -21,6 +21,7 @@ export class Modelo{
         public price: number,
         public img: string,
         public model: string,
+        public colors: string[]
     ) { }
 }
 
@@ -29,6 +30,7 @@ export class Project {
         public id: string,
         public title?: string,
         public description?: string,
+        public quantity: number = 0,
         public color?: string,
         public desing?: string,
         public model?: Modelo,

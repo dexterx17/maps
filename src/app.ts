@@ -1,5 +1,6 @@
 import { World } from './world';
 import { ToolbarOptions } from './ui/toolbarOption';
+import { ProjectTotal } from './ui/project-total';
 
 function main() {
   console.log('main');
@@ -26,7 +27,7 @@ function main() {
     
 
     new ToolbarOptions();
-
+    new ProjectTotal();
         //btnIniciar.style.display = 'none';
 //    })
 }
