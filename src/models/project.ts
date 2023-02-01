@@ -14,10 +14,12 @@ export class Custom{
 
 export class Modelo{
     constructor(
-        public id: string,
-        public title: string,
+        public id: number,
+        public name: string,
+        public materials: string,
         public description: string,
-        public icon: string,
+        public price: number,
+        public img: string,
         public model: string,
     ) { }
 }
@@ -25,13 +27,13 @@ export class Modelo{
 export class Project {
     constructor(
         public id: string,
-        public title: string,
-        public description: string,
-        public color: string,
-        public desing: string,
-        public model: Modelo,
-        public status: ProjectStatus,
-        public custom: Custom | null,
+        public title?: string,
+        public description?: string,
+        public color?: string,
+        public desing?: string,
+        public model?: Modelo,
+        public status?: ProjectStatus,
+        public custom?: Custom | null,
 
     ) {}
 }

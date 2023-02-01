@@ -1,11 +1,13 @@
 import { Modelo } from '../models/project';
 import Component from './base-component';
-import { autobind } from '../decorators/autobind.js';
+import { projectState } from '../state/project-state';
 
 // ModeloItem Class
 export class ModeloItem extends Component<HTMLUListElement, HTMLLIElement>{
 
     private modelo: Modelo;
+
+    btnsSeleccionarModelo: NodeListOf<HTMLButtonElement>;
 
     // get persons() {
     //     if (this.modelo.people === 1) {
@@ -16,22 +18,32 @@ export class ModeloItem extends Component<HTMLUListElement, HTMLLIElement>{
     // }
 
     constructor(hostId: string, modelo: Modelo) {
-        super('single-modelo', hostId, false, modelo.id);
+        super('single-modelo', hostId, false, modelo.id.toString());
         this.modelo = modelo;
+        this.btnsSeleccionarModelo = this.element.querySelectorAll(
+            'button'
+        ) as NodeListOf<HTMLButtonElement>;
 
         this.configure();
         this.renderContent();
     }
 
     configure() {
-        //this.element.addEventListener('dragstart', this.dragStartHandler);
-        //this.element.addEventListener('dragend', this.dragEndHandler);
+        this.btnsSeleccionarModelo.forEach(btn => {
+            btn.addEventListener('click', this.pickModel);
+        })
     }
 
     renderContent() {
-        this.element.querySelector('h2')!.textContent = this.modelo.title;
-        //this.element.querySelector('h3')!.textContent = this.persons + ' assigned';
-        this.element.querySelector('p')!.textContent = this.modelo.description;
+        this.element.querySelector('img')!.setAttribute('src',this.modelo.img);
+        this.element.querySelector('img')!.setAttribute('alt',this.modelo.name);
+        this.element.querySelector('h2')!.textContent = this.modelo.name;
+        this.element.querySelector('p.materials')!.textContent = this.modelo.materials;
+        this.element.querySelector('span.price')!.textContent = `$ ${this.modelo.price}`;
 
+    }
+
+    private pickModel(){
+        projectState.updateModel(this.modelo);
     }
 }

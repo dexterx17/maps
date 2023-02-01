@@ -2,6 +2,7 @@ import Cmp from './base-component';
 import * as Validation from '../util/validation';
 import { autobind as Autobind } from '../decorators/autobind';
 import { projectState } from '../state/project-state';
+import { Project } from '../models/project';
 
 // ProjectInput Class
 export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
@@ -21,14 +22,18 @@ export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
           '#cancelar-input'
         ) as HTMLButtonElement;
         this.configure();
+        this.renderContent();
     }
 
     configure() {
         this.element.addEventListener('submit', this.submitHandler);
-        this.btnCancelarElement.addEventListener('click', this.cancelHandler);
+        this.btnCancelarElement.addEventListener('click', this.cancelHandler);        
     }
 
-    renderContent() { }
+    renderContent() {
+        this.titleInputElement.value = projectState.active.title ? projectState.active.title : this.titleInputElement.value;
+        this.descriptionInputElement.value = projectState.active.description ? projectState.active.description : this.descriptionInputElement.value;
+     }
 
     private gatherUserInput(): [string, string] | void {
         const enteredTitle = this.titleInputElement.value;
@@ -68,14 +73,12 @@ export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
             const [title, desc] = userInput;
-            //projectState.addProject(title, desc, people);
+            projectState.updateSettings(title, desc);
             this.clearInputs();
-
-            this.hostElement.innerHTML = '';
-            this.hostElement.style.display = 'none';
         }
     }
-
+    
+    @Autobind
     private cancelHandler() {
 
         this.hostElement.innerHTML = '';
