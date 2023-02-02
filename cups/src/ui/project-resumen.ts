@@ -23,8 +23,8 @@ export class ProjectResumen extends Cmp<HTMLDivElement, HTMLFormElement> {
     }
 
     renderContent() {
-        this.element.querySelector('img')!.setAttribute('alt',this.modelo.name);
-        this.element.querySelector('h2')!.textContent = this.modelo.name;
+        // this.element.querySelector('img')!.setAttribute('alt',this.modelo.name);
+        // this.element.querySelector('h2')!.textContent = this.modelo.name;
      }
 
     @Autobind

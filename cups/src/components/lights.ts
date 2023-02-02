@@ -18,10 +18,10 @@ function createLights() {
     rectLight.position.set(10, 10, 10);
     rectLight.lookAt(0, 0, 0);
     
+    return directionalLight;
     return rectLight;
     return spotLight;
     return pointLight;
-    return directionalLight;
 }
 
 export { createLights };

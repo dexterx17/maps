@@ -10,22 +10,28 @@ import { Loop } from './systems/loop';
 
 import { projectState } from './state/project-state';
 
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Project } from './models/project';
+import { Color } from 'three';
+
 class World{
     
     camera: THREE.PerspectiveCamera = null;
     scene: THREE.Scene = null;
     renderer: THREE.Renderer = null;
     loop: Loop = null;
+    controls: OrbitControls = null;
 
     constructor(container: HTMLElement){
         this.camera = createCamera();
         this.scene = createScene();
         this.renderer = createRenderer();
         this.loop = new Loop(this.camera, this.scene, this.renderer);
+        this.controls = new OrbitControls(this.camera, container);
         container.append(this.renderer.domElement)
 
         const cube = createCube();
-        const sphere = createSphere();
+        //const sphere = createSphere();
 
         const light = createLights();
 
@@ -33,13 +39,21 @@ class World{
 
         this.scene.add(cube, light);
 
-        this.scene.add(sphere);
+        //this.scene.add(sphere);
 
+        
 
         const resizer = new Resizer(container, this.camera, this.renderer);
         // resizer.onResize = () => {
         //     this.render();
         // };
+            
+        projectState.addListener((projects: Project[]) => {
+                
+            console.log('setColor');
+            cube.material.color = new Color('#ff0000');
+            //this.render()
+        });
     }
 
     render(){
