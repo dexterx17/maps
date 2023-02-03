@@ -21,6 +21,7 @@ class World{
     renderer: THREE.Renderer = null;
     loop: Loop = null;
     controls: OrbitControls = null;
+    projects: Project[] = [];
 
     constructor(container: HTMLElement){
         this.camera = createCamera();
@@ -31,17 +32,12 @@ class World{
         container.append(this.renderer.domElement)
 
         const cube = createCube();
-        //const sphere = createSphere();
 
         const light = createLights();
 
         this.loop.updatables.push(cube);
 
-        this.scene.add(cube, light);
-
-        //this.scene.add(sphere);
-
-        
+        this.scene.add(cube, light);       
 
         const resizer = new Resizer(container, this.camera, this.renderer);
         // resizer.onResize = () => {
@@ -50,10 +46,14 @@ class World{
             
         projectState.addListener((projects: Project[]) => {
                 
-            console.log('setColor');
-            cube.material.color = new Color('#ff0000');
+            console.log('setColor', projectState.active);
+            cube.material.color = new Color(projectState.active.color);
             //this.render()
         });
+    }
+
+    renderProjects(){
+        
     }
 
     render(){

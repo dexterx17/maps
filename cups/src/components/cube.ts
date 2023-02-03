@@ -12,7 +12,7 @@ function createCube() {
     
     cube.position.x = -1
 
-    const radiansPerSecond = MathUtils.degToRad(30);
+    const radiansPerSecond = MathUtils.degToRad(15);
     
     // this method will be called once per frame
     cube.tick = (delta) => {

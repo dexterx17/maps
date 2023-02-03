@@ -8,6 +8,8 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     textoInputElement: HTMLInputElement;
     btnSeleccionarOpcion: HTMLElement;
     btnCancelarElement: HTMLButtonElement;
+    btnImageOption: HTMLElement;
+    inputImage: HTMLInputElement;
     availableColors: string[] = [];
 
     //peopleInputElement: HTMLInputElement;
@@ -19,6 +21,14 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
             '#cancelar-design'
         ) as HTMLButtonElement;
 
+        this.btnImageOption = this.element.querySelector(
+            '#btn-design-image'
+        ) as HTMLElement;
+
+        this.inputImage = this.element.querySelector(
+            '#input-upload-file'
+        ) as HTMLInputElement;
+
         this.fetchModels();
         this.configure();
     }
@@ -26,6 +36,8 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     configure() {
 //        this.renderColors();
         this.btnCancelarElement.addEventListener('click', this.cancelHandler);        
+        this.btnImageOption.addEventListener('click', this.openFileUploader);        
+        this.inputImage.addEventListener('change', this.handlePickedImage);        
     }
 
     renderContent() { }
@@ -37,6 +49,48 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
 
     private renderColors() {
         
+    }
+
+    @autobind
+    private openFileUploader(){
+        this.inputImage.click();
+    }
+
+    @autobind
+    private handlePickedImage(evt){
+        console.log('files',evt)
+        let preview = this.element.querySelector('#fileList');
+        let files = evt.target.files;
+        if (!files.length) {
+            preview.innerHTML = "<p>No files selected!</p>";
+          } else {
+            preview.innerHTML = "";
+            const list = document.createElement("ul");
+            preview.appendChild(list);
+            for (let i = 0; i < files.length; i++) {
+              const li = document.createElement("li");
+              list.appendChild(li);
+        
+              const img = document.createElement("img");
+              img.src = URL.createObjectURL(files[i]);
+              img.height = 60;
+              img.onload = () => {
+                //URL.revokeObjectURL(img.src);
+                var myCanvas = document.getElementById("canvas-design"); // Creates a canvas object
+          var myContext = myCanvas.getContext("2d"); // Creates a contect object
+          myContext.drawImage(img,0,0); // Draws the image on canvas
+          //myCanvas.width = img.width; // Assigns image's width to canvas
+          //myCanvas.height = img.height; // Assigns image's height to canvas
+          //let imgData = myCanvas.toDataURL("image/jpeg",0.75); // Assigns image base64 string in jpeg format to a variable
+
+              }
+              
+              //li.appendChild(img);
+              const info = document.createElement("span");
+              info.innerHTML = `${files[i].name}: ${files[i].size} bytes`;
+              li.appendChild(info);
+            }
+          }
     }
 
     @autobind

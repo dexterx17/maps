@@ -39,25 +39,25 @@ export class ToolbarOptions<T extends HTMLElement, U extends HTMLElement> {
     
     @autobind
     private openProjectSettings() {
-        this.modalContainer.style.display = 'block';
+        this.modalContainer.style.display = 'flex';
         new ProjectInput();
     }
 
     @autobind
     private openModelSettings() {
-        this.modalContainer.style.display = 'block';
+        this.modalContainer.style.display = 'flex';
         new ProjectModel();
     }
 
     @autobind
     private openColorSettings() {
-        this.modalContainer.style.display = 'block';
+        this.modalContainer.style.display = 'flex';
         new ProjectColor();
     }
 
     @autobind
     private openDesingSettings() {
-        this.modalContainer.style.display = 'block';
+        this.modalContainer.style.display = 'flex';
         new ProjectDesign();
     }
 }

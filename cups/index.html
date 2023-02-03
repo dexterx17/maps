@@ -10,7 +10,7 @@
     <body>
         <template id="project-input">
             <form
-                class="flex flex-col gap-1 items-center max-w-xl mx-auto border border-dotted rounded border-gray-800 my-4 p-2"
+                class="flex flex-col gap-1 items-center max-w-xl mx-auto border border-dotted rounded border-gray-800 bg-white my-4 p-4"
             >
                 <header class="p-4">
                     <h3 class="text-xl font-bold">Configura tu proyecto</h3>
@@ -132,7 +132,7 @@
         </template>
         <template id="project-model">
             <div>
-                <header class="flex flex-col items-center justify-center">
+                <header class="py-4 border-b border-gray-900 flex flex-col items-center justify-center">
                     <h2 class="font-extrabold text-2xl">
                         Selecciona un modelo para tu taza
                     </h2>
@@ -141,7 +141,7 @@
                         que selecciones
                     </h5>
                 </header>
-                <section class="py-10 bg-gray-100">
+                <section class="py-2 ">
                     <div
                         id="models-container"
                         class="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -158,7 +158,7 @@
         </template>
         <template id="project-color">
             <div>
-                <header class="flex flex-col items-center justify-center">
+                <header class="py-4 border-b border-gray-900 flex flex-col items-center justify-center">
                     <h2 class="font-extrabold text-2xl">
                         Selecciona un color para tu taza
                     </h2>
@@ -167,7 +167,7 @@
                         que selecciones
                     </h5>
                 </header>
-                <section class="p-10 bg-gray-100">
+                <section class="p-10 mt-4 bg-gray-100">
                     <div id="colors-container" class="mx-auto flex gap-1"></div>
                 </section>
             </div>
@@ -186,7 +186,7 @@
                 <section class="bg-gray-100">
                     <header class="flex justify-center gap-2 bg-gray-800">
                         <div
-                            id="btn-design-text"
+                            id="btn-design-image"
                             class="text-white border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
                         >
                             <div>Imagen</div>
@@ -230,7 +230,7 @@
                             </div>
                         </div>
                         <div
-                            id="btn-design-text"
+                            id="btn-design-icon"
                             class="text-white border border-dashed hover:border-solid cursor-pointer border-white flex flex-col items-center p-2"
                         >
                             <div>Icono</div>
@@ -254,15 +254,21 @@
                     </header>
                     <div class="mx-auto flex gap-1">
                         <article class="h-full w-full">
-                            <header class="p-4">
+                            <header class="p-4 flex justify-between">
                                 <h2>Area de impresión de tu taza</h2>
+                                <div>
+                                    <input id="input-upload-file" class="hidden" type="file"  accept="image/*">
+                                </div>
                             </header>
                             <div
                                 class="h-full bg-gray-200 px-8"
                                 id="design-container"
                             >
-                                <canvas class="h-48 w-full"> </canvas>
-                                <span> Area de impresion </span>
+                                <canvas id="canvas-design" class="h-48 w-full"> </canvas>
+                                
+                                <div id="fileList">
+                                    <p>No files selected!</p>
+                                </div>
                             </div>
                             <footer class="flex gap-2 justify-center py-4">
                                 <button

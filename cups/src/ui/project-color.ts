@@ -31,14 +31,17 @@ export class ProjectColor extends Cmp<HTMLDivElement, HTMLFormElement> {
         this.availableColors =  [
             '#ffffff',
             '#000000',
+            '#ff0000',
+            '#00ff00',
+            '#0000ff',
         ];
     }
 
     private renderColors() {
         console.log('this.availableColors',this.availableColors)
 
-        for (const modelItem of this.availableColors) {
-            new ColorItem(this.element.querySelector('#colors-container')!.id, modelItem);
+        for (const colorItem of this.availableColors) {
+            new ColorItem(this.element.querySelector('#colors-container')!.id, colorItem);
         }
     }
 }

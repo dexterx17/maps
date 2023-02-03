@@ -1,5 +1,6 @@
 import Component from './base-component';
 import { projectState } from '../state/project-state';
+import { autobind } from '../decorators/autobind';
 
 // ColorItem Class
 export class ColorItem extends Component<HTMLUListElement, HTMLLIElement>{
@@ -20,7 +21,7 @@ export class ColorItem extends Component<HTMLUListElement, HTMLLIElement>{
     }
 
     configure() {
-        this.btnsSeleccionarModelo.addEventListener('click', this.pickModel)
+        this.btnsSeleccionarModelo.addEventListener('click', this.pickColor)
     }
 
     renderContent() {
@@ -29,7 +30,9 @@ export class ColorItem extends Component<HTMLUListElement, HTMLLIElement>{
         
     }
 
-    private pickModel(){
+    @autobind
+    private pickColor(){
+        console.log('%ccolor-item.ts line:33 this.color', 'color: #007acc;', this.color);
         projectState.updateColor(this.color);
     }
 }
