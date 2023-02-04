@@ -80,9 +80,44 @@ scene.add(axesHelper);
 //console.log(mesh.position.length())
 // Sizes
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 };
+
+window.addEventListener('resize', () => {
+    console.log('resized');
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+
+    //update aspce caemra
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix()
+
+    //update renderer 
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+})
+
+window.addEventListener('dblclick',() => {
+    
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscriptElement;
+
+    if( !fullscreenElement){
+        console.log('go fullscreen');
+        if(canvas?.requestFullscreen){
+            canvas.requestFullscreen();
+        }else if (canvas.webkitRequestFullscreen){
+            canvas.webkitRequestFullscreen();
+        }
+    }else{
+        console.log('leave screen');
+        if(document.exitFullscreen){
+            document.exitFullscreen();
+        }else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen();
+        }
+    }
+});
 
 // Camera
 const fov = 75; //degrees
@@ -105,6 +140,7 @@ console.log(camera.position.length())
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
+//controls.enabled = false;
 controls.enableDamping = true;
 // controls.target.y = 2;
 // controls.update();
@@ -117,7 +153,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas
 });
 renderer.setSize(sizes.width, sizes.height);
-
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 console.log(scene);
 
 // gsap.to(group.position, {duration: 1,delay: 1,x: 2 });

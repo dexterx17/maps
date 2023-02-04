@@ -13,17 +13,19 @@ import { projectState } from './state/project-state';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Project } from './models/project';
 import { Color } from 'three';
+import { autobind } from './decorators/autobind';
 
 class World{
-    
+    container: HTMLElement;
     camera: THREE.PerspectiveCamera = null;
     scene: THREE.Scene = null;
-    renderer: THREE.Renderer = null;
+    renderer: THREE.WebGLRenderer = null;
     loop: Loop = null;
     controls: OrbitControls = null;
     projects: Project[] = [];
 
     constructor(container: HTMLElement){
+        this.container = container;
         this.camera = createCamera();
         this.scene = createScene();
         this.renderer = createRenderer();
@@ -50,6 +52,9 @@ class World{
             cube.material.color = new Color(projectState.active.color);
             //this.render()
         });
+
+        this.handleResize();
+        this.handleFullScreen();
     }
 
     renderProjects(){
@@ -67,6 +72,44 @@ class World{
     stop() {
         this.loop.stop();
     }
+
+    
+    handleResize(){
+        window.addEventListener('resize', () => {
+            console.log('resize')
+            //update aspce caemra
+            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.updateProjectionMatrix()
+
+            //update renderer 
+            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+        });
+    }
+
+    handleFullScreen(){
+        window.addEventListener('dblclick',() => {
+    
+            const fullscreenElement = document.fullscreenElement || document.webkitFullscriptElement;
+        
+            if( !fullscreenElement){
+                console.log('go fullscreen');
+                if(this.container?.requestFullscreen){
+                    this.container.requestFullscreen();
+                }else if (this.container.webkitRequestFullscreen){
+                    this.container.webkitRequestFullscreen();
+                }
+            }else{
+                console.log('leave screen');
+                if(document.exitFullscreen){
+                    document.exitFullscreen();
+                }else if(document.webkitExitFullscreen){
+                    document.webkitExitFullscreen();
+                }
+            }
+        });
+    }
+
 }
 
 export { World };
