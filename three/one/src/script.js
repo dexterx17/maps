@@ -2,8 +2,29 @@ import './style.css';
 
 import * as THREE from 'three';
 import gsap from 'gsap';
+import * as dat from 'dat.gui';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+
+// Debug
+const gui = new dat.GUI({
+    closed: true,
+    //width: 400
+});
+
+//gui.hide(); //H
+
+const parameters = {
+    color: 0x00ff00,
+    spin: () => {
+        console.log('spin');
+        gsap.to(mesh.rotation, { 
+            duration:1,
+            y: mesh.rotation.y + Math.PI * 2
+        })
+    }
+};
 
 let canvas = document.querySelector('.webgl');
 
@@ -50,10 +71,73 @@ const scene = new THREE.Scene();
 // group.add(cube3);
 
 // Red cube
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 'red' });
+//const geometry = new THREE.BoxGeometry(1, 1, 1);
+const geometry = new THREE.BoxBufferGeometry(1, 1, 1, 3, 3, 3);
+
+const material = new THREE.MeshBasicMaterial({
+    color: parameters.color,
+    wireframe: true
+});
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
+
+gui.add(mesh.position, 'x', -3, 3, 0.1);
+gui.add(mesh.position, 'z', -3, 3, 0.1);
+gui.add(mesh.position, 'y')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name('elevation');
+
+gui.add(mesh, 'visible');
+gui.add(material, 'wireframe');
+
+gui
+    .addColor(parameters,'color')
+    .onChange( () => {
+        material.color.set(parameters.color);
+    });
+
+gui.add(parameters, 'spin');
+
+// const count = 5000
+// const positionsArray = new Float32Array( count * 3 * 3);
+
+// for (let i = 0; i < count * 3 * 3; i++) {
+//     positionsArray[i] = (Math.random() - 0.5) * 4;
+// }
+
+// const positionAttribute = new THREE.BufferAttribute(positionsArray,3);
+// const geometry = new THREE.BufferGeometry();
+// geometry.setAttribute('position', positionAttribute);
+// const material = new THREE.MeshBasicMaterial({
+//     color: 'red',
+//     wireframe: true
+// });
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+// Figure from triangles
+// for (let i = 0; i < 50; i++) {
+//     const points = [];
+
+//     for (let j = 0; j < 3; j++) {
+//         const vertex = new THREE.Vector3(
+//             (Math.random() - 0.5) *4,
+//             (Math.random() - 0.5) *4,
+//             (Math.random() - 0.5) *4
+//         );
+//         points.push(vertex);
+//     }    
+    
+//     const geometry = new THREE.BufferGeometry()
+//     .setFromPoints( points );
+//     const material = new THREE.MeshBasicMaterial({
+//         color: 'red',
+//         wireframe: true
+//     });
+//     const mesh = new THREE.Mesh(geometry, material);
+//     scene.add(mesh);
+// }
 
 // Position
 // mesh.position.x = 0.7;
