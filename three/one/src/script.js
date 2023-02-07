@@ -6,6 +6,63 @@ import * as dat from 'dat.gui';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+//import imageSource from './color.jpg';
+//dconsole.log(imageSource);
+
+/**
+ * Texture
+ */
+// const image = new Image();
+// const texture = new THREE.Texture(image);
+// image.onload = () => {
+//     texture.needsUpdate = true;
+//     console.log('image loading', texture);
+// }
+// image.src = 'textures/door/color.jpg';
+const loadingManager = new THREE.LoadingManager();
+
+// loadingManager.onStart = () => {
+//     console.log('on Start');
+// };
+
+// loadingManager.onLoad = () => {
+//     console.log('onLoad');
+// };
+
+// loadingManager.onProgress = (evt) => {
+//     console.log('onProgress', evt);
+// };
+
+// loadingManager.onError = () => {
+//     console.log('onError');
+// };
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
+const colorTexture = textureLoader.load('/textures/minecraft.png');
+//const colorTexture = textureLoader.load('/textures/checkerboard-8x8.png');
+//const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png');
+//const colorTexture = textureLoader.load('/textures/door/color.jpg');
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg');
+const heightTexture = textureLoader.load('/textures/door/height.jpg');
+const normalTexture = textureLoader.load('/textures/door/normal.jpg');
+const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
+const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg');
+const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg');
+
+// colorTexture.repeat.set(2, 3)
+// //colorTexture.wrapS = THREE.MirroredRepeatWrapping;
+// colorTexture.wrapS = THREE.RepeatWrapping;
+// colorTexture.wrapT = THREE.RepeatWrapping;
+
+// colorTexture.offset.x = 0.5;
+// colorTexture.offset.y = 0.5;
+
+// colorTexture.rotation = Math.PI / 4
+// colorTexture.center.set(0.5, 0.5);
+
+//colorTexture.generateMipmaps = false
+//colorTexture.minFilter = THREE.NearestFilter;
+colorTexture.magFilter = THREE.NearestFilter;
 
 // Debug
 const gui = new dat.GUI({
@@ -28,7 +85,7 @@ const parameters = {
 
 let canvas = document.querySelector('.webgl');
 
-console.log(OrbitControls);
+//console.log(OrbitControls);
 // Cursor
 const cursor = {
     x: 0,
@@ -71,12 +128,20 @@ const scene = new THREE.Scene();
 // group.add(cube3);
 
 // Red cube
-//const geometry = new THREE.BoxGeometry(1, 1, 1);
-const geometry = new THREE.BoxBufferGeometry(1, 1, 1, 3, 3, 3);
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+//const geometry = new THREE.BoxBufferGeometry(1, 1, 1, 3, 3, 3);
+console.log(geometry.attributes.uv);
+//const geometry = new THREE.SphereBufferGeometry(1, 32, 32);
+//const geometry = new THREE.ConeBufferGeometry(1, 1, 32);
+//const geometry = new THREE.TorusBufferGeometry(1, 0.35, 32, 100);
 
+// const material = new THREE.MeshBasicMaterial({
+//     color: parameters.color,
+//     wireframe: true
+// });
 const material = new THREE.MeshBasicMaterial({
-    color: parameters.color,
-    wireframe: true
+    map: colorTexture,
+    //wireframe: true
 });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
@@ -219,7 +284,7 @@ const camera = new THREE.PerspectiveCamera(fov, aspectRatio, 0.01, 100);
 // camera.position.y = 3;
  camera.position.z = 3;
 scene.add(camera);
-console.log(camera.position.length())
+//console.log(camera.position.length())
 //camera.lookAt(mesh.position)
 
 // Controls

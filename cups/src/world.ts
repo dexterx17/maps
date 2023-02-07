@@ -3,6 +3,9 @@ import { createScene } from './components/scene';
 import { createLights } from './components/lights';
 import { createCube } from './components/cube';
 import { createSphere } from './components/sphere';
+import { createDebugger } from './components/debugger';
+import { createLoadingManager } from './components/loadingManager';
+
 
 import { createRenderer } from './systems/renderer';
 import { Resizer } from './systems/resizer';
@@ -12,7 +15,7 @@ import { projectState } from './state/project-state';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Project } from './models/project';
-import { Color } from 'three';
+import { Color, TextureLoader, Texture } from 'three';
 import { autobind } from './decorators/autobind';
 
 class World{
@@ -23,19 +26,42 @@ class World{
     loop: Loop = null;
     controls: OrbitControls = null;
     projects: Project[] = [];
+    gui = null;
+    loadingManager = null;
 
-    constructor(container: HTMLElement){
+    constructor(container: HTMLElement) {
+        // create debugger
+        this.gui = createDebugger();
         this.container = container;
+        
+        // create camera for world
         this.camera = createCamera();
+        // debug camera positions
+        this.gui.add(this.camera.rotation, 'x').min(-3).max(3).step(0.01).name('Camera X');
+        this.gui.add(this.camera.rotation, 'y').min(-3).max(3).step(0.01).name('Camera Y');
+        this.gui.add(this.camera.rotation, 'z').min(-3).max(3).step(0.01).name('Camera Z');
+
+        this.loadingManager = createLoadingManager();
+
         this.scene = createScene();
         this.renderer = createRenderer();
         this.loop = new Loop(this.camera, this.scene, this.renderer);
         this.controls = new OrbitControls(this.camera, container);
         container.append(this.renderer.domElement)
 
+
+        const textureLoader = new TextureLoader(this.loadingManager);
+        const image = new Image();
+        let texture = new Texture(image);
+        
+        
         const cube = createCube();
 
         const light = createLights();
+        // debug lights positions
+        this.gui.add(light.position, 'x').min(-10).max(10).step(0.01).name('Light X');
+        this.gui.add(light.position, 'y').min(-10).max(10).step(0.01).name('Light Y');
+        this.gui.add(light.position, 'z').min(-10).max(10).step(0.01).name('Light Z');
 
         this.loop.updatables.push(cube);
 
@@ -50,8 +76,18 @@ class World{
                 
             console.log('setColor', projectState.active);
             cube.material.color = new Color(projectState.active.color);
+            console.log('setDesign', projectState.active.desing);
+            texture = textureLoader.load(projectState.active.desing);
+            texture.needsUpdate = true;
+            cube.material.map = texture;
             //this.render()
         });
+
+
+
+        
+        //const colorTexture = textureLoader.load('/textures/minecraft.png');
+
 
         this.handleResize();
         this.handleFullScreen();

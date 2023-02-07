@@ -52,6 +52,11 @@ export class ProjectState extends State<Project> {
 	updateQuantity(qty: number){
 		this.activeProject.quantity = qty;
 		this.updateListeners();
+    }
+    
+	updateTexture(texture: string){
+		this.activeProject.desing = texture;
+		this.updateListeners();
 	}
 
     //   addProject(title: string, description: string, numOfPeople: number) {

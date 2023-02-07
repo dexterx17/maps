@@ -7,6 +7,7 @@ import { ColorItem } from './color-item';
 export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     textoInputElement: HTMLInputElement;
     btnSeleccionarOpcion: HTMLElement;
+    btnFinalizarElement: HTMLButtonElement;
     btnCancelarElement: HTMLButtonElement;
     btnImageOption: HTMLElement;
     inputImage: HTMLInputElement;
@@ -16,7 +17,11 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
 
     constructor() {
         super('project-design', 'modal', true, 'user-design');
-        
+
+        this.btnFinalizarElement = this.element.querySelector(
+            '#finalizar-design'
+        ) as HTMLButtonElement;
+
         this.btnCancelarElement = this.element.querySelector(
             '#cancelar-design'
         ) as HTMLButtonElement;
@@ -34,10 +39,11 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     }
 
     configure() {
-//        this.renderColors();
-        this.btnCancelarElement.addEventListener('click', this.cancelHandler);        
-        this.btnImageOption.addEventListener('click', this.openFileUploader);        
-        this.inputImage.addEventListener('change', this.handlePickedImage);        
+        //        this.renderColors();
+        this.btnFinalizarElement.addEventListener('click', this.okHandler);
+        this.btnCancelarElement.addEventListener('click', this.cancelHandler);
+        this.btnImageOption.addEventListener('click', this.openFileUploader);
+        this.inputImage.addEventListener('change', this.handlePickedImage);
     }
 
     renderContent() { }
@@ -48,49 +54,58 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     }
 
     private renderColors() {
-        
+
     }
 
     @autobind
-    private openFileUploader(){
+    private openFileUploader() {
         this.inputImage.click();
     }
 
     @autobind
-    private handlePickedImage(evt){
-        console.log('files',evt)
+    private handlePickedImage(evt) {
+        console.log('files', evt)
         let preview = this.element.querySelector('#fileList');
         let files = evt.target.files;
         if (!files.length) {
             preview.innerHTML = "<p>No files selected!</p>";
-          } else {
+        } else {
             preview.innerHTML = "";
             const list = document.createElement("ul");
             preview.appendChild(list);
             for (let i = 0; i < files.length; i++) {
-              const li = document.createElement("li");
-              list.appendChild(li);
-        
-              const img = document.createElement("img");
-              img.src = URL.createObjectURL(files[i]);
-              img.height = 60;
-              img.onload = () => {
-                //URL.revokeObjectURL(img.src);
-                var myCanvas = document.getElementById("canvas-design"); // Creates a canvas object
-          var myContext = myCanvas.getContext("2d"); // Creates a contect object
-          myContext.drawImage(img,0,0); // Draws the image on canvas
-          //myCanvas.width = img.width; // Assigns image's width to canvas
-          //myCanvas.height = img.height; // Assigns image's height to canvas
-          //let imgData = myCanvas.toDataURL("image/jpeg",0.75); // Assigns image base64 string in jpeg format to a variable
+                const li = document.createElement("li");
+                list.appendChild(li);
 
-              }
-              
-              //li.appendChild(img);
-              const info = document.createElement("span");
-              info.innerHTML = `${files[i].name}: ${files[i].size} bytes`;
-              li.appendChild(info);
+                const img = document.createElement("img");
+                img.src = URL.createObjectURL(files[i]);
+                img.height = 60;
+                img.onload = () => {
+                    //URL.revokeObjectURL(img.src);
+                    var myCanvas = document.getElementById("canvas-design") as HTMLCanvasElement; // Creates a canvas object
+                    var myContext = myCanvas.getContext("2d"); // Creates a contect object
+                    myContext.drawImage(img, 0, 0); // Draws the image on canvas
+                    //myCanvas.width = img.width; // Assigns image's width to canvas
+                    //myCanvas.height = img.height; // Assigns image's height to canvas
+                    //let imgData = myCanvas.toDataURL("image/jpeg",0.75); // Assigns image base64 string in jpeg format to a variable
+
+                }
+
+                //li.appendChild(img);
+                const info = document.createElement("span");
+                info.innerHTML = `${files[i].name}: ${files[i].size} bytes`;
+                li.appendChild(info);
             }
-          }
+        }
+    }
+    
+    @autobind
+    private okHandler() {
+        //projectState.updateTexture('/assets/images/taza1.jpg');
+        projectState.updateTexture('/assets/textures/minecraft.png');
+
+        this.hostElement.innerHTML = '';
+        this.hostElement.style.display = 'none';
     }
 
     @autobind
