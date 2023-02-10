@@ -38,17 +38,17 @@ const loadingManager = new THREE.LoadingManager();
 // };
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
+const matcapTextexture = textureLoader.load('/textures/matcaps/1.png');
 const colorTexture = textureLoader.load('/textures/minecraft.png');
 //const colorTexture = textureLoader.load('/textures/checkerboard-8x8.png');
 //const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png');
-//const colorTexture = textureLoader.load('/textures/door/color.jpg');
+const doorTexture = textureLoader.load('/textures/door/color.jpg');
 const alphaTexture = textureLoader.load('/textures/door/alpha.jpg');
 const heightTexture = textureLoader.load('/textures/door/height.jpg');
 const normalTexture = textureLoader.load('/textures/door/normal.jpg');
 const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
 const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg');
 const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg');
-
 // colorTexture.repeat.set(2, 3)
 // //colorTexture.wrapS = THREE.MirroredRepeatWrapping;
 // colorTexture.wrapS = THREE.RepeatWrapping;
@@ -139,32 +139,55 @@ console.log(geometry.attributes.uv);
 //     color: parameters.color,
 //     wireframe: true
 // });
+// const material = new THREE.MeshBasicMaterial({
+//     map: colorTexture,
+//     //wireframe: true
+// });
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
+// gui.add(mesh.position, 'x', -3, 3, 0.1);
+// gui.add(mesh.position, 'z', -3, 3, 0.1);
+// gui.add(mesh.position, 'y')
+//     .min(-3)
+//     .max(3)
+//     .step(0.01)
+//     .name('elevation');
+
+// gui.add(mesh, 'visible');
+// gui.add(material, 'wireframe');
+
+// gui
+//     .addColor(parameters,'color')
+//     .onChange( () => {
+//         material.color.set(parameters.color);
+//     });
+
+// gui.add(parameters, 'spin');
+
 const material = new THREE.MeshBasicMaterial({
-    map: colorTexture,
-    //wireframe: true
+    color: 0xff0000,
 });
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+material.transparent = true;
+material.alphaMap = alphaTexture
+//material.side = THREE.DoubleSide
 
-gui.add(mesh.position, 'x', -3, 3, 0.1);
-gui.add(mesh.position, 'z', -3, 3, 0.1);
-gui.add(mesh.position, 'y')
-    .min(-3)
-    .max(3)
-    .step(0.01)
-    .name('elevation');
+const sphere = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.5,16,16),
+    material
+);
+sphere.position.x = -1.5;
+const plane = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1,1),
+    material
+);
 
-gui.add(mesh, 'visible');
-gui.add(material, 'wireframe');
-
-gui
-    .addColor(parameters,'color')
-    .onChange( () => {
-        material.color.set(parameters.color);
-    });
-
-gui.add(parameters, 'spin');
-
+const torus = new THREE.Mesh(
+    new THREE.TorusBufferGeometry(0.3, 0.2, 16, 32),
+    material
+);
+torus.position.x = 1.5;
+scene.add(sphere, plane, torus)
 // const count = 5000
 // const positionsArray = new Float32Array( count * 3 * 3);
 
@@ -341,6 +364,15 @@ const tick = () => {
     // camera.position.y = cursor.y * 5;
     
     // camera.lookAt(mesh.position);
+
+    // Update objects
+    sphere.rotation.y = 0.1 * elapsedTime;
+    plane.rotation.y = 0.1 * elapsedTime;
+    torus.rotation.y = 0.1 * elapsedTime;
+
+    sphere.rotation.x = 0.15 * elapsedTime;
+    plane.rotation.x = 0.15 * elapsedTime;
+    torus.rotation.x = 0.15 * elapsedTime;
 
     controls.update();
     // Render
