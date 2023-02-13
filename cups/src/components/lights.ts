@@ -1,7 +1,7 @@
 import { DirectionalLight, PointLight, SpotLight, RectAreaLight } from "three";
 
 function createLights() {
-    const directionalLight = new DirectionalLight('white', 8);
+    const directionalLight = new DirectionalLight('white', 10);
     directionalLight.position.set(10, 10, 10);
 
 

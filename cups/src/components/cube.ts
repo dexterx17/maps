@@ -19,7 +19,7 @@ function createCube(project: Project) {
     alphaTexture.rotation = Math.PI / 4
     alphaTexture.center.set(0.5, 0.5);
     material.transparent = true;
-    material.map = matcapTextexture;
+    //material.map = matcapTextexture;
     //material.alphaMap = alphaTexture;
 
     // create a Mesh containing the geometry and material
@@ -34,8 +34,16 @@ function createCube(project: Project) {
             // increase the cube's rotation each frame
             //cube.rotation.z += radiansPerSecond * delta;
             //cube.rotation.x += radiansPerSecond * delta;
-            cube.rotation.y += radiansPerSecond * delta;
+        cube.rotation.y += radiansPerSecond * delta;
+
     };
+
+    cube.updateTexture = (texture: Texture) => {
+        console.log('update texture');
+        
+        material.map = texture;
+        material.needsUpdate = true;
+    }
 
     return cube;
 }
