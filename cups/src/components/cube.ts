@@ -1,12 +1,26 @@
-import { BoxGeometry, CylinderGeometry, Color, Mesh, MeshStandardMaterial, MathUtils } from 'three';
+import { BoxGeometry, CylinderGeometry, Color, Mesh, MeshStandardMaterial, MathUtils, Texture, TextureLoader } from 'three';
+import { Project } from '../models/project';
 
-function createCube() {
+function createCube(project: Project) {
     // create a geometry
     const geometry = new CylinderGeometry(2, 2, 4);
+    //const geometry = new CylinderGeometry(2, 2, 4);
     //geometry.setAttribute('openEnded',true)
 
     // create a default (white) Basic material
     const material = new MeshStandardMaterial();
+
+    // default texture
+    const textureLoader = new TextureLoader();
+    const alphaTexture = textureLoader.load('/assets/textures/door/alpha.jpg');
+    const matcapTextexture = textureLoader.load('/assets/textures/matcaps/1.png');
+    //const matcapTextexture = textureLoader.load('/textures/matcaps/1.png');
+
+    alphaTexture.rotation = Math.PI / 4
+    alphaTexture.center.set(0.5, 0.5);
+    material.transparent = true;
+    material.map = matcapTextexture;
+    //material.alphaMap = alphaTexture;
 
     // create a Mesh containing the geometry and material
     const cube = new Mesh(geometry, material);
