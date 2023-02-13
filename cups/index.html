@@ -173,7 +173,7 @@
             </div>
         </template>
         <template id="project-design">
-            <div>
+            <div class="w-full">
                 <header class="flex flex-col items-center justify-center p-2">
                     <h2 class="font-extrabold text-2xl">
                         Configura el diseño para tu taza
@@ -254,21 +254,16 @@
                     </header>
                     <div class="mx-auto flex gap-1">
                         <article class="h-full w-full">
-                            <header class="p-4 flex justify-between">
-                                <h2>Area de impresión de tu taza</h2>
+                            <header class="">
                                 <div>
                                     <input id="input-upload-file" class="hidden" type="file"  accept="image/*">
                                 </div>
                             </header>
                             <div
-                                class="h-full bg-gray-200 px-8"
+                                class="h-full flex justify-center bg-gray-200 py-2 px-8"
                                 id="design-container"
                             >
                                 <canvas id="canvas-design" class="h-48 w-full"> </canvas>
-                                
-                                <div id="fileList">
-                                    <p>No files selected!</p>
-                                </div>
                             </div>
                             <footer class="flex gap-2 justify-center py-4">
                                 <button
