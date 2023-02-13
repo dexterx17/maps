@@ -5,6 +5,47 @@ import gsap from 'gsap';
 import * as dat from 'dat.gui';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+
+
+/**
+ * Fonts
+ */
+const fontLoader = new FontLoader();
+fontLoader.load(
+    '/fonts/helvetiker_regular.typeface.json',
+    (font) => {
+        console.log('font',font)
+         const textGeometry = new TextGeometry(
+             'SANTANA estudio',
+            {
+                font: font,
+                size: 0.5,
+                height: 0.2,
+                curveSegments: 5,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffest: 0,
+                bevelSegments: 4
+            }
+        )
+
+         textGeometry.computeBoundingBox();
+         console.log('bounding',textGeometry.boundingBox)
+
+         const textMaterial = new THREE.MeshBasicMaterial();
+         textMaterial.wireframe = true;
+         const text = new THREE.Mesh(textGeometry, textMaterial);
+        
+         scene.add(text);
+
+    },
+    ()=>{
+        console.log('fss')
+    }
+)
 
 //import imageSource from './color.jpg';
 //dconsole.log(imageSource);
@@ -38,7 +79,8 @@ const loadingManager = new THREE.LoadingManager();
 // };
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const matcapTextexture = textureLoader.load('/textures/matcaps/1.png');
+const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager);
+const matcapTextexture = textureLoader.load('/textures/matcaps/8.png');
 const colorTexture = textureLoader.load('/textures/minecraft.png');
 //const colorTexture = textureLoader.load('/textures/checkerboard-8x8.png');
 //const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png');
@@ -49,6 +91,17 @@ const normalTexture = textureLoader.load('/textures/door/normal.jpg');
 const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
 const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg');
 const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg');
+const gradientTexture = textureLoader.load('/textures/gradients/3.jpg');
+
+const environmentMapTexture = cubeTextureLoader.load([
+    '/textures/environmentMaps/0/px.jpg',
+    '/textures/environmentMaps/0/nx.jpg',
+    '/textures/environmentMaps/0/py.jpg',
+    '/textures/environmentMaps/0/ny.jpg',
+    '/textures/environmentMaps/0/pz.jpg',
+    '/textures/environmentMaps/0/nz.jpg'
+]);
+
 // colorTexture.repeat.set(2, 3)
 // //colorTexture.wrapS = THREE.MirroredRepeatWrapping;
 // colorTexture.wrapS = THREE.RepeatWrapping;
@@ -165,27 +218,80 @@ console.log(geometry.attributes.uv);
 
 // gui.add(parameters, 'spin');
 
-const material = new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-});
-material.transparent = true;
-material.alphaMap = alphaTexture
+// const material = new THREE.MeshBasicMaterial({
+//     color: 0xff0000,
+// });
+// material.transparent = true;
+// material.alphaMap = alphaTexture
 //material.side = THREE.DoubleSide
 
-const sphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(0.5,16,16),
-    material
-);
-sphere.position.x = -1.5;
-const plane = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(1,1),
-    material
-);
+//const material = new THREE.MeshNormalMaterial();
+//material.wireframe = true;
+//material.flatShading = true;
 
-const torus = new THREE.Mesh(
-    new THREE.TorusBufferGeometry(0.3, 0.2, 16, 32),
+// const material = new THREE.MeshMatcapMaterial();
+// material.matcap = matcapTextexture;
+
+//const material = new THREE.MeshDepthMaterial();
+
+//const material = new THREE.MeshLambertMaterial();
+
+// const material = new THREE.MeshPhongMaterial();
+// material.shininess = 100
+// material.specular = new THREE.Color(0x118bff)
+
+// const material = new THREE.MeshToonMaterial();
+// gradientTexture.minFilter = THREE.NearestFilter;
+// gradientTexture.magFilter = THREE.NearestFilter;
+// gradientTexture.generateMipmaps = false;
+// material.gradientMap = gradientTexture;
+
+// const material = new THREE.MeshStandardMaterial();
+// //  material.metalness= 0.45
+// //  material.roughness = 0.65
+// material.map = doorTexture
+// material.aoMap = ambientOcclusionTexture
+// material.aoMapIntensity =1 ;
+// material.displacementMap = heightTexture;
+// material.displacementScale = 0.1;
+
+// material.metalnessMap = metalnessTexture;
+// material.roughnessMap = roughnessTexture;
+// material.normalMap = normalTexture;
+// material.transparent = true
+// material.alphaMap = alphaTexture
+
+const material = new THREE.MeshStandardMaterial();
+material.metalness= 0.7
+material.roughness = 0.2
+material.envMap = environmentMapTexture;
+
+gui.add(material,'metalness',0,1,0.01);
+gui.add(material,'roughness',0,1,0.01);
+gui.add(material,'aoMapIntensity',0,10,0.01);
+gui.add(material,'displacementScale',0,1,0.01);
+
+const sphere = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(0.5,64,64),
     material
 );
+sphere.geometry.setAttribute('uv2',
+     new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+    )
+sphere.position.x = -1.5;
+
+const plane = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1,1,100, 100),
+    material
+);
+plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
+
+console.log('plane', plane.geometry.attributes);
+const torus = new THREE.Mesh(
+    new THREE.TorusBufferGeometry(0.3, 0.2, 64, 128),
+    material
+);
+torus.geometry.setAttribute('uv2', new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2))
 torus.position.x = 1.5;
 scene.add(sphere, plane, torus)
 // const count = 5000
@@ -248,6 +354,18 @@ scene.add(sphere, plane, torus)
 const axesHelper = new THREE.AxesHelper(2);
 scene.add(axesHelper);
 
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 0.5);
+pointLight.position.x = 2;
+pointLight.position.y = 3;
+pointLight.position.z = 4;
+scene.add(pointLight);
 //mesh.position.normalize();
 //console.log(mesh.position.length())
 // Sizes
