@@ -51,14 +51,13 @@ class World{
 
 
         const textureLoader = new TextureLoader(this.loadingManager);
-        const image = new Image();
-        let texture = new Texture(image);
+        //const matcapTextexture = textureLoader.load('/assets/textures/matcaps/1.png');
         
-        
-        const cube = createCube();
+        const cube = createCube(projectState.active);
 
         const light = createLights();
         // debug lights positions
+        this.gui.add(light, 'intensity').min(0).max(10).step(0.01).name('Light Intensity');
         this.gui.add(light.position, 'x').min(-10).max(10).step(0.01).name('Light X');
         this.gui.add(light.position, 'y').min(-10).max(10).step(0.01).name('Light Y');
         this.gui.add(light.position, 'z').min(-10).max(10).step(0.01).name('Light Z');
@@ -76,11 +75,17 @@ class World{
                 
             console.log('setColor', projectState.active);
             cube.material.color = new Color(projectState.active.color);
-            console.log('setDesign', projectState.active.desing);
-            texture = textureLoader.load(projectState.active.desing);
-            texture.needsUpdate = true;
-            cube.material.map = texture;
-            //this.render()
+
+            if (projectState.active.desing) {
+                console.log('setDesign', projectState.active.desing);
+                
+                let customTexture = textureLoader.load(projectState.active.desing)
+
+
+                console.log('customTexture', customTexture);
+                
+                cube.updateTexture(customTexture)
+            }
         });
 
 

@@ -12,6 +12,7 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     btnImageOption: HTMLElement;
     inputImage: HTMLInputElement;
     availableColors: string[] = [];
+    finalImage: string;
 
     //peopleInputElement: HTMLInputElement;
 
@@ -79,6 +80,7 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
 
                 const img = document.createElement("img");
                 img.src = URL.createObjectURL(files[i]);
+                this.finalImage = img.src;
                 img.height = 60;
                 img.onload = () => {
                     //URL.revokeObjectURL(img.src);
@@ -95,14 +97,14 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
                 const info = document.createElement("span");
                 info.innerHTML = `${files[i].name}: ${files[i].size} bytes`;
                 li.appendChild(info);
+
             }
         }
     }
     
     @autobind
     private okHandler() {
-        //projectState.updateTexture('/assets/images/taza1.jpg');
-        projectState.updateTexture('/assets/textures/minecraft.png');
+        projectState.updateTexture(this.finalImage);
 
         this.hostElement.innerHTML = '';
         this.hostElement.style.display = 'none';
