@@ -2,6 +2,7 @@ import { createCamera } from './components/camera';
 import { createScene } from './components/scene';
 import { createLights } from './components/lights';
 import { createCube } from './components/cube';
+import { createPlane } from './components/plane';
 import { createSphere } from './components/sphere';
 import { createDebugger } from './components/debugger';
 import { createLoadingManager } from './components/loadingManager';
@@ -15,7 +16,7 @@ import { projectState } from './state/project-state';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Project } from './models/project';
-import { Color, TextureLoader, Texture } from 'three';
+import { Color, TextureLoader, Texture, AmbientLight, PointLightHelper } from 'three';
 import { autobind } from './decorators/autobind';
 
 class World{
@@ -54,8 +55,22 @@ class World{
         //const matcapTextexture = textureLoader.load('/assets/textures/matcaps/1.png');
         
         const cube = createCube(projectState.active);
+        
+        const plane = createPlane();
+        this.scene.add(plane)
+        this.gui.add(plane.rotation, 'x').min(0).max(30).step(0.01).name('Plane R X');
+        this.gui.add(plane.rotation, 'y').min(0).max(30).step(0.01).name('Plane R Y');
 
+        const ambientLight = new AmbientLight(0xffffff, 1.5);
+        this.scene.add(ambientLight);
+        this.gui.add(ambientLight, 'intensity').min(0).max(3).step(0.01).name('Light A Intensity');
+
+        
         const light = createLights();
+
+        const pointLightHelper = new PointLightHelper(light);
+        this.scene.add(pointLightHelper);
+        
         // debug lights positions
         this.gui.add(light, 'intensity').min(0).max(10).step(0.01).name('Light Intensity');
         this.gui.add(light.position, 'x').min(-10).max(10).step(0.01).name('Light X');

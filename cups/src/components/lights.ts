@@ -5,8 +5,8 @@ function createLights() {
     directionalLight.position.set(10, 10, 10);
 
 
-    const pointLight = new PointLight('white', 1,100);
-    pointLight.position.set(10, 10, 10);
+    const pointLight = new PointLight(0xffffff, 0.5);
+    pointLight.position.set(2, 3, 4);
 
     const spotLight = new SpotLight('white');
     spotLight.position.set(10, 10, 10);
@@ -18,10 +18,10 @@ function createLights() {
     rectLight.position.set(10, 10, 10);
     rectLight.lookAt(0, 0, 0);
     
+    return pointLight;
     return directionalLight;
     return rectLight;
     return spotLight;
-    return pointLight;
 }
 
 export { createLights };
