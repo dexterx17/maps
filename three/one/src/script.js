@@ -9,43 +9,6 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
 
-/**
- * Fonts
- */
-const fontLoader = new FontLoader();
-fontLoader.load(
-    '/fonts/helvetiker_regular.typeface.json',
-    (font) => {
-        console.log('font',font)
-         const textGeometry = new TextGeometry(
-             'SANTANA estudio',
-            {
-                font: font,
-                size: 0.5,
-                height: 0.2,
-                curveSegments: 5,
-                bevelEnabled: true,
-                bevelThickness: 0.03,
-                bevelSize: 0.02,
-                bevelOffest: 0,
-                bevelSegments: 4
-            }
-        )
-
-         textGeometry.computeBoundingBox();
-         console.log('bounding',textGeometry.boundingBox)
-
-         const textMaterial = new THREE.MeshBasicMaterial();
-         textMaterial.wireframe = true;
-         const text = new THREE.Mesh(textGeometry, textMaterial);
-        
-         scene.add(text);
-
-    },
-    ()=>{
-        console.log('fss')
-    }
-)
 
 //import imageSource from './color.jpg';
 //dconsole.log(imageSource);
@@ -116,6 +79,57 @@ const environmentMapTexture = cubeTextureLoader.load([
 //colorTexture.generateMipmaps = false
 //colorTexture.minFilter = THREE.NearestFilter;
 colorTexture.magFilter = THREE.NearestFilter;
+
+
+/**
+ * Fonts
+ */
+const fontLoader = new FontLoader();
+fontLoader.load(
+    '/fonts/helvetiker_regular.typeface.json',
+    (font) => {
+        console.log('font',font)
+         const textGeometry = new TextGeometry(
+             'SANTANA estudio',
+            {
+                font: font,
+                size: 0.5,
+                height: 0.2,
+                curveSegments: 5,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffest: 0,
+                bevelSegments: 4
+            }
+        )
+
+         textGeometry.computeBoundingBox();
+         console.log('bounding',textGeometry.boundingBox)
+        //  textGeometry.translate(
+        //     - (textGeometry.boundingBox.max.x - 0.02) * 0.5,
+        //     - (textGeometry.boundingBox.max.y - 0.02) * 0.5,
+        //     - (textGeometry.boundingBox.max.z - 0.03) * 0.5
+        //  )
+        textGeometry.center()
+        textGeometry.computeBoundingBox();
+        console.log('bounding',textGeometry.boundingBox)
+
+        //const textMaterial = new THREE.MeshBasicMaterial();
+        const textMaterial = new THREE.MeshMatcapMaterial({
+            matcap: matcapTextexture
+        });
+        //textMaterial.wireframe = true;
+
+        const text = new THREE.Mesh(textGeometry, textMaterial);
+        
+        scene.add(text);
+
+    },
+    ()=>{
+        console.log('fss')
+    }
+)
 
 // Debug
 const gui = new dat.GUI({
@@ -271,29 +285,30 @@ gui.add(material,'roughness',0,1,0.01);
 gui.add(material,'aoMapIntensity',0,10,0.01);
 gui.add(material,'displacementScale',0,1,0.01);
 
-const sphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(0.5,64,64),
-    material
-);
-sphere.geometry.setAttribute('uv2',
-     new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
-    )
-sphere.position.x = -1.5;
+// const sphere = new THREE.Mesh(
+//     new THREE.SphereBufferGeometry(0.5,64,64),
+//     material
+// );
+// sphere.geometry.setAttribute('uv2',
+//      new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+//     )
+// sphere.position.x = -1.5;
 
-const plane = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(1,1,100, 100),
-    material
-);
-plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
+// const plane = new THREE.Mesh(
+//     new THREE.PlaneBufferGeometry(1,1,100, 100),
+//     material
+// );
+// plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
 
-console.log('plane', plane.geometry.attributes);
-const torus = new THREE.Mesh(
-    new THREE.TorusBufferGeometry(0.3, 0.2, 64, 128),
-    material
-);
-torus.geometry.setAttribute('uv2', new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2))
-torus.position.x = 1.5;
-scene.add(sphere, plane, torus)
+// console.log('plane', plane.geometry.attributes);
+// const torus = new THREE.Mesh(
+//     new THREE.TorusBufferGeometry(0.3, 0.2, 64, 128),
+//     material
+// );
+// torus.geometry.setAttribute('uv2', new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2))
+// torus.position.x = 1.5;
+// scene.add(sphere, plane, torus)
+
 // const count = 5000
 // const positionsArray = new Float32Array( count * 3 * 3);
 
@@ -350,6 +365,30 @@ scene.add(sphere, plane, torus)
 // mesh.rotation.x = Math.PI * 0.25;
 // mesh.rotation.y = Math.PI * 0.25;
 
+console.time('donuts');
+
+let n = 100;
+
+const donutGeometry = new THREE.TorusBufferGeometry(0.3, 0.2, 20, 45 );
+const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTextexture});
+for (let index = 0; index < n; index++) {
+    const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+
+    donut.position.x = (Math.random() - 0.5) * 10 
+    donut.position.y = (Math.random() - 0.5) * 10 
+    donut.position.z = (Math.random() - 0.5) * 10 
+
+    donut.rotation.x = (Math.random() * Math.PI)
+    donut.rotation.y = (Math.random() * Math.PI)
+
+    let scale = Math.random();
+    donut.scale.set(scale, scale, scale)
+
+    scene.add(donut)
+    
+}
+
+console.timeEnd('donuts');
 // Axes helper
 const axesHelper = new THREE.AxesHelper(2);
 scene.add(axesHelper);
@@ -423,7 +462,7 @@ const camera = new THREE.PerspectiveCamera(fov, aspectRatio, 0.01, 100);
 // );
 // camera.position.x = 3;
 // camera.position.y = 3;
- camera.position.z = 3;
+ camera.position.z = 8;
 scene.add(camera);
 //console.log(camera.position.length())
 //camera.lookAt(mesh.position)
@@ -484,13 +523,13 @@ const tick = () => {
     // camera.lookAt(mesh.position);
 
     // Update objects
-    sphere.rotation.y = 0.1 * elapsedTime;
-    plane.rotation.y = 0.1 * elapsedTime;
-    torus.rotation.y = 0.1 * elapsedTime;
+    // sphere.rotation.y = 0.1 * elapsedTime;
+    // plane.rotation.y = 0.1 * elapsedTime;
+    // torus.rotation.y = 0.1 * elapsedTime;
 
-    sphere.rotation.x = 0.15 * elapsedTime;
-    plane.rotation.x = 0.15 * elapsedTime;
-    torus.rotation.x = 0.15 * elapsedTime;
+    // sphere.rotation.x = 0.15 * elapsedTime;
+    // plane.rotation.x = 0.15 * elapsedTime;
+    // torus.rotation.x = 0.15 * elapsedTime;
 
     controls.update();
     // Render
