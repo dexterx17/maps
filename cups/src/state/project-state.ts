@@ -13,7 +13,7 @@ class State<T> {
 
 export class ProjectState extends State<Project> {
     private projects: Project[] = [];
-    private activeProject: Project = new Project("one");
+    private activeProject: Project = new Project("one","My first mug");
     private static instance: ProjectState;
 
     private constructor() {

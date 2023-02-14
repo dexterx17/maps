@@ -2,6 +2,7 @@ import { createCamera } from './components/camera';
 import { createScene } from './components/scene';
 import { createLights } from './components/lights';
 import { createCube } from './components/cube';
+import { createText } from './components/text';
 import { createPlane } from './components/plane';
 import { createSphere } from './components/sphere';
 import { createDebugger } from './components/debugger';
@@ -56,7 +57,10 @@ class World{
         
         const cube = createCube(projectState.active);
         
+        const text = createText(projectState.active, this.scene);
+
         const plane = createPlane();
+
         this.scene.add(plane)
         this.gui.add(plane.rotation, 'x').min(0).max(30).step(0.01).name('Plane R X');
         this.gui.add(plane.rotation, 'y').min(0).max(30).step(0.01).name('Plane R Y');
@@ -95,7 +99,6 @@ class World{
                 console.log('setDesign', projectState.active.desing);
                 
                 let customTexture = textureLoader.load(projectState.active.desing)
-
 
                 console.log('customTexture', customTexture);
                 
