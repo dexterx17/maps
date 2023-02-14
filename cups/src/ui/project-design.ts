@@ -2,6 +2,7 @@ import Cmp from './base-component';
 import { autobind } from '../decorators/autobind';
 import { projectState } from '../state/project-state';
 import { ColorItem } from './color-item';
+import { fabric } from 'fabric';
 
 // ProjectDesign Class
 export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
@@ -13,6 +14,7 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     inputImage: HTMLInputElement;
     availableColors: string[] = [];
     finalImage: string;
+    canvas: fabric.Canvas;
 
     //peopleInputElement: HTMLInputElement;
 
@@ -35,16 +37,31 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
             '#input-upload-file'
         ) as HTMLInputElement;
 
+        this.canvas = new fabric.Canvas('canvas-design', {
+            //backgroundColor: 'rgb(255,0,0)',
+            selectionColor: 'blue',
+            selectionLineWidth: 2,
+            width: 756,
+            height: 359
+        });
+
         this.fetchModels();
         this.configure();
     }
 
     configure() {
         //        this.renderColors();
+
         this.btnFinalizarElement.addEventListener('click', this.okHandler);
         this.btnCancelarElement.addEventListener('click', this.cancelHandler);
         this.btnImageOption.addEventListener('click', this.openFileUploader);
         this.inputImage.addEventListener('change', this.handlePickedImage);
+
+        var text = new fabric.Text("Área de impresión de tu taza", {
+            fontSize: 20
+        });
+        
+        this.canvas.add(text);
     }
 
     renderContent() { }
@@ -66,39 +83,36 @@ export class ProjectDesign extends Cmp<HTMLDivElement, HTMLFormElement> {
     @autobind
     private handlePickedImage(evt) {
         console.log('files', evt)
-        let preview = this.element.querySelector('#fileList');
         let files = evt.target.files;
-        if (!files.length) {
-            preview.innerHTML = "<p>No files selected!</p>";
-        } else {
-            preview.innerHTML = "";
-            const list = document.createElement("ul");
-            preview.appendChild(list);
             for (let i = 0; i < files.length; i++) {
-                const li = document.createElement("li");
-                list.appendChild(li);
-
                 const img = document.createElement("img");
                 img.src = URL.createObjectURL(files[i]);
-                this.finalImage = img.src;
-                img.height = 60;
+
+                //img.height = 60;
                 img.onload = () => {
                     //URL.revokeObjectURL(img.src);
-                    var myCanvas = document.getElementById("canvas-design") as HTMLCanvasElement; // Creates a canvas object
-                    var myContext = myCanvas.getContext("2d"); // Creates a contect object
-                    myContext.drawImage(img, 0, 0); // Draws the image on canvas
-                    //myCanvas.width = img.width; // Assigns image's width to canvas
-                    //myCanvas.height = img.height; // Assigns image's height to canvas
-                    //let imgData = myCanvas.toDataURL("image/jpeg",0.75); // Assigns image base64 string in jpeg format to a variable
-
+                    var imgInstance = new fabric.Image(img, {
+                        left: 10,
+                        top: 10,
+                        opacity: 0.85
+                    });
+                    imgInstance.on('selected', function () {
+                        console.log('selected a image');
+                    });
+                    this.canvas.add(imgInstance);
                 }
 
-                //li.appendChild(img);
-                const info = document.createElement("span");
-                info.innerHTML = `${files[i].name}: ${files[i].size} bytes`;
-                li.appendChild(info);
+                // var rect = new fabric.Rect({
+                //     left: 100,
+                //     top: 100,
+                //     fill: 'yellow',
+                //     width: 20,
+                //     height: 20,
+                //     angle: 45
+                // });
 
-            }
+                this.finalImage = img.src;
+            
         }
     }
     
