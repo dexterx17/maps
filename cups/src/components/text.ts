@@ -4,7 +4,7 @@ import { Project } from '../models/project';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-function createText(project: Project, scene: THREE.Scene) {
+function createText(project: Project, scene: THREE.Scene, camera: THREE.Camera) {
 
     const fontLoader = new FontLoader();
     fontLoader.load(
@@ -46,6 +46,8 @@ function createText(project: Project, scene: THREE.Scene) {
             const text = new Mesh(textGeometry, textMaterial);
 
             text.position.y = 3;
+
+            text.lookAt(camera.position)
 
             scene.add(text)
         })

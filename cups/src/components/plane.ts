@@ -1,4 +1,4 @@
-import { PlaneGeometry, CylinderGeometry, Color, Mesh, MeshBasicMaterial, MathUtils, Texture, TextureLoader } from 'three';
+import { PlaneGeometry, CylinderGeometry, Color, Mesh, MeshStandardMaterial, MathUtils, Texture, TextureLoader } from 'three';
 
 function createPlane() {
     // create a geometry
@@ -7,25 +7,26 @@ function createPlane() {
     //geometry.setAttribute('openEnded',true)
 
     // create a default (white) Basic material
-    const material = new MeshBasicMaterial({
-        color: 0xffffff
+    const material = new MeshStandardMaterial({
+        // color: 0xffffff,
+        roughness: 0.7
     });
 
     // default texture
-    const textureLoader = new TextureLoader();
-    const alphaTexture = textureLoader.load('/assets/textures/door/alpha.jpg');
-    //const matcapTextexture = textureLoader.load('/textures/matcaps/1.png');
+    // const textureLoader = new TextureLoader();
+    // const alphaTexture = textureLoader.load('/assets/textures/door/alpha.jpg');
+    // //const matcapTextexture = textureLoader.load('/textures/matcaps/1.png');
 
-    alphaTexture.rotation = Math.PI / 4
-    alphaTexture.center.set(0.5, 0.5);
-    material.transparent = true;
+    // alphaTexture.rotation = Math.PI / 4
+    // alphaTexture.center.set(0.5, 0.5);
+    // material.transparent = true;
     //material.map = matcapTextexture;
     //material.alphaMap = alphaTexture;
 
     // create a Mesh containing the geometry and material
     const plane = new Mesh(geometry, material);
     
-    
+    plane.receiveShadow = true;    
     plane.rotation.x = - Math.PI * 0.5
     plane.position.y = - 2
 

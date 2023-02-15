@@ -1,6 +1,6 @@
 import { createCamera } from './components/camera';
 import { createScene } from './components/scene';
-import { createLights } from './components/lights';
+import { createDirectionalLight, createPointLight, createSpotLight } from './components/lights';
 import { createCube } from './components/cube';
 import { createText } from './components/text';
 import { createPlane } from './components/plane';
@@ -17,7 +17,7 @@ import { projectState } from './state/project-state';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Project } from './models/project';
-import { Color, TextureLoader, Texture, AmbientLight, PointLightHelper } from 'three';
+import { Color, TextureLoader, Texture, AmbientLight, PointLightHelper, CameraHelper } from 'three';
 import { autobind } from './decorators/autobind';
 
 class World{
@@ -39,9 +39,9 @@ class World{
         // create camera for world
         this.camera = createCamera();
         // debug camera positions
-        this.gui.add(this.camera.rotation, 'x').min(-3).max(3).step(0.01).name('Camera X');
-        this.gui.add(this.camera.rotation, 'y').min(-3).max(3).step(0.01).name('Camera Y');
-        this.gui.add(this.camera.rotation, 'z').min(-3).max(3).step(0.01).name('Camera Z');
+        // this.gui.add(this.camera.rotation, 'x').min(-3).max(3).step(0.01).name('Camera X');
+        // this.gui.add(this.camera.rotation, 'y').min(-3).max(3).step(0.01).name('Camera Y');
+        // this.gui.add(this.camera.rotation, 'z').min(-3).max(3).step(0.01).name('Camera Z');
 
         this.loadingManager = createLoadingManager();
 
@@ -51,39 +51,94 @@ class World{
         this.controls = new OrbitControls(this.camera, container);
         container.append(this.renderer.domElement)
 
+        const lightsFolder = this.gui.addFolder('Lights')
 
+        /**
+         * Lights
+         */
+        //ambient light
+        const ambientLight = new AmbientLight(0xffffff,0.3);
+        this.scene.add(ambientLight);
+
+        const directionalLight = createDirectionalLight();
+        this.scene.add(directionalLight);  
+
+        //left light
+        const leftLight = createPointLight();
+        //leftLight.intensity = 2.5;
+        leftLight.position.set(-5, 4, 0);
+        this.scene.add(leftLight);  
+
+        //right light
+        const rightLight = createPointLight();
+        rightLight.position.set(5, 4, 0);
+        this.scene.add(rightLight);
+        
+        const spotLight = createSpotLight();
+        this.scene.add(spotLight);
+
+
+
+        // debug lights positions
+        lightsFolder.add(ambientLight, 'intensity').min(0).max(1).step(0.01).name('Light A Intensity');
+        lightsFolder.add(directionalLight, 'intensity').min(0).max(5).step(0.01).name('DLight Intensity');
+
+        lightsFolder.add(leftLight, 'intensity').min(0).max(5).step(0.01).name('LLight Intensity');
+        lightsFolder.add(rightLight, 'intensity').min(0).max(5).step(0.01).name('RLight Intensity');
+        
+        const leftLightsFolder = lightsFolder.addFolder('Left Light')
+        leftLightsFolder.add(spotLight, 'intensity').min(0).max(5).step(0.01).name('SLight Intensity');
+        leftLightsFolder.add(spotLight.position, 'x').min(-10).max(10).step(0.01).name('LLight X');
+        leftLightsFolder.add(spotLight.position, 'y').min(-10).max(10).step(0.01).name('LLight Y');
+        leftLightsFolder.add(spotLight.position, 'z').min(-10).max(10).step(0.01).name('LLight Z');
+        
+
+        /**
+         * Light helpers
+         */
+        
+        const directionLightCameraHelper = new CameraHelper(directionalLight.shadow.camera);
+        directionLightCameraHelper.visible = true;
+        this.scene.add(directionLightCameraHelper);
+
+        const leftPointLightHelper = new PointLightHelper(leftLight);
+        leftPointLightHelper.visible = true;
+        this.scene.add(leftPointLightHelper);
+        
+        const rightPointLightHelper = new PointLightHelper(rightLight);
+        rightPointLightHelper.visible = true;
+        this.scene.add(rightPointLightHelper);
+        
+        const spotLightCameraHelper = new CameraHelper(spotLight.shadow.camera);
+        spotLightCameraHelper.visible = true;
+        this.scene.add(spotLightCameraHelper);
+
+
+
+        /** 
+         * Scene objects
+         */
         const textureLoader = new TextureLoader(this.loadingManager);
         //const matcapTextexture = textureLoader.load('/assets/textures/matcaps/1.png');
-        
+
         const cube = createCube(projectState.active);
-        
-        const text = createText(projectState.active, this.scene);
+        const sphere = createSphere();
+        const text = createText(projectState.active, this.scene, this.camera);
 
         const plane = createPlane();
+        //plane.material.roughness = 0.7
+        this.gui.add(plane.material, 'metalness').min(0).max(1).step(0.001)
+        this.gui.add(plane.material, 'roughness').min(0).max(1).step(0.001)
 
-        this.scene.add(plane)
-        this.gui.add(plane.rotation, 'x').min(0).max(30).step(0.01).name('Plane R X');
-        this.gui.add(plane.rotation, 'y').min(0).max(30).step(0.01).name('Plane R Y');
+        //look cameras to cube position
+        leftLight.lookAt(cube.position);
+        rightLight.lookAt(cube.position);
 
-        const ambientLight = new AmbientLight(0xffffff, 1.5);
-        this.scene.add(ambientLight);
-        this.gui.add(ambientLight, 'intensity').min(0).max(3).step(0.01).name('Light A Intensity');
+        this.scene.add(plane, cube, sphere)
 
-        
-        const light = createLights();
-
-        const pointLightHelper = new PointLightHelper(light);
-        this.scene.add(pointLightHelper);
-        
-        // debug lights positions
-        this.gui.add(light, 'intensity').min(0).max(10).step(0.01).name('Light Intensity');
-        this.gui.add(light.position, 'x').min(-10).max(10).step(0.01).name('Light X');
-        this.gui.add(light.position, 'y').min(-10).max(10).step(0.01).name('Light Y');
-        this.gui.add(light.position, 'z').min(-10).max(10).step(0.01).name('Light Z');
 
         this.loop.updatables.push(cube);
 
-        this.scene.add(cube, light);       
 
         const resizer = new Resizer(container, this.camera, this.renderer);
         // resizer.onResize = () => {

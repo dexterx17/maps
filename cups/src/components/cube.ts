@@ -25,7 +25,8 @@ function createCube(project: Project) {
     // create a Mesh containing the geometry and material
     const cube = new Mesh(geometry, material);
     
-    cube.position.x = -1
+    //cube.position.x = -1
+    cube.castShadow = true;
 
     const radiansPerSecond = MathUtils.degToRad(15);
     
