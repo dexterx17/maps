@@ -76,21 +76,6 @@ class World{
         
         const spotLight = createSpotLight();
         this.scene.add(spotLight);
-
-
-
-        // debug lights positions
-        lightsFolder.add(ambientLight, 'intensity').min(0).max(1).step(0.01).name('Light A Intensity');
-        lightsFolder.add(directionalLight, 'intensity').min(0).max(5).step(0.01).name('DLight Intensity');
-
-        lightsFolder.add(leftLight, 'intensity').min(0).max(5).step(0.01).name('LLight Intensity');
-        lightsFolder.add(rightLight, 'intensity').min(0).max(5).step(0.01).name('RLight Intensity');
-        
-        const leftLightsFolder = lightsFolder.addFolder('Left Light')
-        leftLightsFolder.add(spotLight, 'intensity').min(0).max(5).step(0.01).name('SLight Intensity');
-        leftLightsFolder.add(spotLight.position, 'x').min(-10).max(10).step(0.01).name('LLight X');
-        leftLightsFolder.add(spotLight.position, 'y').min(-10).max(10).step(0.01).name('LLight Y');
-        leftLightsFolder.add(spotLight.position, 'z').min(-10).max(10).step(0.01).name('LLight Z');
         
 
         /**
@@ -113,6 +98,65 @@ class World{
         spotLightCameraHelper.visible = true;
         this.scene.add(spotLightCameraHelper);
 
+        /**
+         * Debug Lights
+         */
+        // debug lights positions
+        const ambientLightsFolder = lightsFolder.addFolder('Ambiental Light');
+        ambientLightsFolder.add(ambientLight, 'visible').name('Visibility');
+        ambientLightsFolder.add(ambientLight, 'intensity').min(0).max(1).step(0.01).name('Intensity');
+        ambientLightsFolder.addColor(ambientLight, 'color').onChange((data) => {            
+            let color = new Color(data.r/255, data.g/255, data.b/255);
+            ambientLight.color = color;
+        });
+
+        const directionarLightsFolder = lightsFolder.addFolder('Directional Light');
+        directionarLightsFolder.add(directionalLight, 'visible').name('Visibility');
+        directionarLightsFolder.add(directionLightCameraHelper, 'visible').name('Helper');
+        directionarLightsFolder.add(directionalLight, 'intensity').min(0).max(5).step(0.01).name('Intensity');
+        directionarLightsFolder.addColor(directionalLight, 'color').onChange((data) => {            
+            let color = new Color(data.r/255, data.g/255, data.b/255);
+            directionalLight.color = color;
+        });
+        directionarLightsFolder.add(directionalLight.position, 'x').min(-10).max(10).step(0.01).name('X');
+        directionarLightsFolder.add(directionalLight.position, 'y').min(-10).max(10).step(0.01).name('Y');
+        directionarLightsFolder.add(directionalLight.position, 'z').min(-10).max(10).step(0.01).name('Z');
+
+        const leftLightsFolder = lightsFolder.addFolder('Left Light')
+        leftLightsFolder.add(leftLight, 'visible').name('Visibility');
+        leftLightsFolder.add(leftPointLightHelper, 'visible').name('Helper');
+        leftLightsFolder.add(leftLight, 'intensity').min(0).max(5).step(0.01).name('Intensity');
+        leftLightsFolder.addColor(leftLight, 'color').onChange((data) => {            
+            let color = new Color(data.r/255, data.g/255, data.b/255);
+            leftLight.color = color;
+        });
+        leftLightsFolder.add(leftLight.position, 'x').min(-10).max(10).step(0.01).name('X');
+        leftLightsFolder.add(leftLight.position, 'y').min(-10).max(10).step(0.01).name('Y');
+        leftLightsFolder.add(leftLight.position, 'z').min(-10).max(10).step(0.01).name('Z');
+
+        const rightLightsFolder = lightsFolder.addFolder('Right Light')
+        rightLightsFolder.add(rightLight, 'visible').name('Visibility');
+        rightLightsFolder.add(rightPointLightHelper, 'visible').name('Helper');
+        rightLightsFolder.add(rightLight, 'intensity').min(0).max(5).step(0.01).name('Intensity');
+        rightLightsFolder.addColor(rightLight, 'color').onChange((data) => {            
+            let color = new Color(data.r/255, data.g/255, data.b/255);
+            rightLight.color = color;
+        });
+        rightLightsFolder.add(rightLight.position, 'x').min(-10).max(10).step(0.01).name('X');
+        rightLightsFolder.add(rightLight.position, 'y').min(-10).max(10).step(0.01).name('Y');
+        rightLightsFolder.add(rightLight.position, 'z').min(-10).max(10).step(0.01).name('Z');
+        
+        const spotLightsFolder = lightsFolder.addFolder('Spot Light')
+        spotLightsFolder.add(spotLight, 'visible').name('Visibility');
+        spotLightsFolder.add(spotLightCameraHelper, 'visible').name('Helper');
+        spotLightsFolder.add(spotLight, 'intensity').min(0).max(5).step(0.01).name('Intensity');
+        spotLightsFolder.addColor(spotLight, 'color').onChange((data) => {            
+            let color = new Color(data.r/255, data.g/255, data.b/255);
+            spotLight.color = color;
+        });
+        spotLightsFolder.add(spotLight.position, 'x').min(-10).max(10).step(0.01).name('X');
+        spotLightsFolder.add(spotLight.position, 'y').min(-10).max(10).step(0.01).name('Y');
+        spotLightsFolder.add(spotLight.position, 'z').min(-10).max(10).step(0.01).name('Z');
 
 
         /** 
