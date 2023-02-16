@@ -51,8 +51,6 @@ class World{
         this.controls = new OrbitControls(this.camera, container);
         container.append(this.renderer.domElement)
 
-        const lightsFolder = this.gui.addFolder('Lights')
-
         /**
          * Lights
          */
@@ -101,7 +99,8 @@ class World{
         /**
          * Debug Lights
          */
-        // debug lights positions
+        const lightsFolder = this.gui.addFolder('Lights')
+
         const ambientLightsFolder = lightsFolder.addFolder('Ambiental Light');
         ambientLightsFolder.add(ambientLight, 'visible').name('Visibility');
         ambientLightsFolder.add(ambientLight, 'intensity').min(0).max(1).step(0.01).name('Intensity');
@@ -170,9 +169,6 @@ class World{
         const text = createText(projectState.active, this.scene, this.camera);
 
         const plane = createPlane();
-        //plane.material.roughness = 0.7
-        this.gui.add(plane.material, 'metalness').min(0).max(1).step(0.001)
-        this.gui.add(plane.material, 'roughness').min(0).max(1).step(0.001)
 
         //look cameras to cube position
         leftLight.lookAt(cube.position);
@@ -180,6 +176,19 @@ class World{
 
         this.scene.add(plane, cube, sphere)
 
+
+        /**
+         * Debug Lights
+        */
+        const objectsFolder = this.gui.addFolder('Objects')
+        
+        const planesFolder = objectsFolder.addFolder('Plane')
+        planesFolder.add(plane.material, 'metalness').min(0).max(1).step(0.001)
+        planesFolder.add(plane.material, 'roughness').min(0).max(1).step(0.001)
+        
+        const cilynderFolder = objectsFolder.addFolder('Cylinder')
+        cilynderFolder.add(cube.material, 'metalness').min(0).max(1).step(0.001)
+        cilynderFolder.add(cube.material, 'roughness').min(0).max(1).step(0.001)
 
         this.loop.updatables.push(cube);
 
