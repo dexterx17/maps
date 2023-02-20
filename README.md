@@ -10,3 +10,6 @@ https://hdri-haven.com/
 
 - Convert fonts to typeface
 https://gero3.github.io/facetype.js/
+
+- Particles
+https://www.kenney.nl/assets/particle-pack
