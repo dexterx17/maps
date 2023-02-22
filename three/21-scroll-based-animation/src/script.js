@@ -28,9 +28,16 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+/**
+ * Textures
+ */
 const textureLoader = new THREE.TextureLoader();
-const gradientTexture = textureLoader.load('textures/gradients/3.jpg');
+const gradientTexture = textureLoader.load('textures/gradients/5.jpg');
 gradientTexture.magFilter = THREE.NearestFilter
+
+const particleTexture = textureLoader.load('textures/particles/7.png');
+
+
 /**
  * Test cube
  */
@@ -80,20 +87,36 @@ const sectionMeshes = [ mesh1, mesh2, mesh3];
 //Gemotry
 const countParticles = 200 
 const positions = new Float32Array(countParticles * 3)
+const colors = new Float32Array(countParticles * 3)
 
 for (let index = 0; index < countParticles; index++) {
     positions[index * 3 + 0] =  (Math.random() - 0.5) * 10;
     positions[index * 3 + 1] = (objectsDistance * 0.5) -  Math.random() * objectsDistance * sectionMeshes.length;
-    positions[index * 3 + 2] = (Math.random() - 0.5) * 10;    
+    positions[index * 3 + 2] = (Math.random() - 0.5) * 10;   
+
+    let color = new THREE.Color('#ff0000');
+    
+    colors[index * 3 + 0] = color.r;
+    colors[index * 3 + 1] = color.g;
+    colors[index * 3 + 2] = color.b;
 }
 
 const particlesGeometry = new THREE.BufferGeometry()
 particlesGeometry.setAttribute('position',new THREE.BufferAttribute(positions, 3));
+//particlesGeometry.setAttribute('color',new THREE.BufferAttribute(colors, 3));
 
 const particlesMaterial = new THREE.PointsMaterial({
     color: parameters.materialColor,
+
+    size: 0.1,
     sizeAttenuation: true,
-    size: 0.03
+
+    alphaMap: particleTexture,
+    transparent: true,
+
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    // vertexColors: true
 })
 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);

@@ -9,6 +9,9 @@
     "build": "webpack build",
     "watch": "webpack watch",
     "css": "npx tailwindcss -i ./src/css/cups.css -o ./css/dist.css --watch",
+    "css-landing": "npx tailwindcss -i ./src/css/landing.css -o ./css/landing.css --watch",
+    "build-landing": "webpack build --config ./webpack.config-landing.js",
+    "watch-landing": "webpack watch --config ./webpack.config-landing.js",
     "deploy": "vercel --prod"
   },
   "keywords": [],
